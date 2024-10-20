@@ -337,11 +337,7 @@
 <body>
 
     <header>
-        <h1 class="bemvindo">Bem-vindo,
-            <?php
-            echo getenv('USERNAME');
-            ?>!
-        </h1>
+        <h1 class="bemvindo">Seja Bem vindo!</h1>
         <p class="p1">Um pouco sobre mim:</p>
     </header>
 
