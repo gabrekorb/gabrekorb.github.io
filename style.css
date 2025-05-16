@@ -10,6 +10,10 @@ input {
   padding: 5px;
 }
 
+header {
+background-color: #000;
+}
+
 .avaliacao {
   margin-bottom: 10px;
   border-bottom: 1px solid #ccc;
