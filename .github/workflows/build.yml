@@ -1,1 +1,31 @@
 
+name: Compilar e Verificar Código C
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar o repositório
+      uses: actions/checkout@v3
+
+    - name: Instalar ferramentas de build
+      run: sudo apt-get update && sudo apt-get install -y build-essential
+
+    - name: Compilar calcular.c
+      run: gcc -o calcular.cgi calcular.c
+
+    - name: Verificar binário gerado
+      run: ls -lh calcular.cgi
+
+    - name: Publicar artefato compilado
+      uses: actions/upload-artifact@v3
+      with:
+        name: calcular.cgi
+        path: calcular.cgi
