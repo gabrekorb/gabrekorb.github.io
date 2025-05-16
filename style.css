@@ -1,0 +1,16 @@
+body {
+  font-family: sans-serif;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+input {
+  margin: 5px;
+  padding: 5px;
+}
+
+.avaliacao {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
