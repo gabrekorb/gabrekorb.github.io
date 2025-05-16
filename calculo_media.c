@@ -10,41 +10,48 @@ typedef struct {
     float peso_percentual;
 } Avaliacao;
 
-typedef struct {
+float calcularMedia(const char *data) {
     Avaliacao avaliacoes[MAX];
-    int quantidade;
-} SistemaNotas;
+    int quantidade = 0;
+    float soma = 0.0, totalPesos = 0.0;
 
-void inicializarSistema(SistemaNotas *sistema) {
-    sistema->quantidade = 0;
-}
-int adicionarAvaliacao(SistemaNotas *sistema, const char *tipo, float nota, float peso_percentual) {
-    if (sistema->quantidade >= MAX) {
-        return 0;
+    char *token = strtok((char *)data, "&");
+    while (token != NULL && quantidade < MAX) {
+        sscanf(token, "tipo%d=%[^&]", &quantidade, avaliacoes[quantidade].tipo);
+        token = strtok(NULL, "&");
+        sscanf(token, "nota%d=%f", &quantidade, &avaliacoes[quantidade].nota);
+        token = strtok(NULL, "&");
+        sscanf(token, "peso%d=%f", &quantidade, &avaliacoes[quantidade].peso_percentual);
+        quantidade++;
+        token = strtok(NULL, "&");
     }
 
-    Avaliacao *nova = &sistema->avaliacoes[sistema->quantidade];
-    strncpy(nova->tipo, tipo, sizeof(nova->tipo) - 1);
-    nova->tipo[sizeof(nova->tipo) - 1] = '\0';
-    nova->nota = nota;
-    nova->peso_percentual = peso_percentual;
-
-    sistema->quantidade++;
-    return 1;
-}
-float calcularMediaFinal(SistemaNotas *sistema) {
-    float soma = 0.0;
-    float totalPesos = 0.0;
-
-    for (int i = 0; i < sistema->quantidade; i++) {
-        float peso = sistema->avaliacoes[i].peso_percentual / 100.0;
-        soma += sistema->avaliacoes[i].nota * peso;
+    for (int i = 0; i < quantidade; i++) {
+        float peso = avaliacoes[i].peso_percentual / 100.0;
+        soma += avaliacoes[i].nota * peso;
         totalPesos += peso;
     }
 
-    if (totalPesos == 0.0) {
-        return -1.0;
-    }
-
+    if (totalPesos == 0) return -1.0;
     return soma;
+}
+
+int main() {
+    char *len_str = getenv("CONTENT_LENGTH");
+    int len = len_str ? atoi(len_str) : 0;
+
+    char post_data[1024] = {0};
+    fread(post_data, 1, len, stdin);
+
+    float media = calcularMedia(post_data);
+
+    printf("Content-Type: text/html\n\n");
+    printf("<html><body>");
+    if (media < 0) {
+        printf("<p>Erro: pesos inválidos.</p>");
+    } else {
+        printf("<p>Média final: %.2f</p>", media);
+    }
+    printf("</body></html>");
+    return 0;
 }
