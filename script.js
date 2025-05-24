@@ -23,7 +23,7 @@ document.getElementById("notaForm").addEventListener("submit", function (e) {
     params.append(key, value);
   }
 
-  fetch("/cgi-bin/calcular.cgi", {
+  fetch("/calcular.c", {
     method: "POST",
     body: params,
   })
