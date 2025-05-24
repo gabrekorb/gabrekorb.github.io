@@ -23,9 +23,12 @@ document.getElementById("notaForm").addEventListener("submit", function (e) {
     params.append(key, value);
   }
 
-  fetch("/calcular.c", {
+  fetch("http://localhost:8080/teste/calcular.php", {  // Ajustei a URL aqui
     method: "POST",
-    body: params,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded", // importante para PHP processar $_POST
+    },
+    body: params.toString(),  // Enviar como string URL encoded
   })
     .then((res) => res.text())
     .then((html) => {
@@ -35,4 +38,5 @@ document.getElementById("notaForm").addEventListener("submit", function (e) {
       document.getElementById("resultado").innerText = "Erro ao calcular.";
     });
 });
+
 adicionarAvaliacao();
