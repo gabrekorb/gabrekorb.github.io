@@ -23,7 +23,7 @@ document.getElementById("notaForm").addEventListener("submit", function (e) {
     params.append(key, value);
   }
 
-  fetch("http://localhost:8080/teste/calcular.php", {  // Ajustei a URL aqui
+  fetch("http://192.168.3.10/unochapeco-calculator/calcular.php", {  // Ajustei a URL aqui
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded", // importante para PHP processar $_POST
