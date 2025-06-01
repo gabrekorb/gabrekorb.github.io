@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Notas - Unochapecó</title>
+    <title>Calculadora de Notas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,7 +27,13 @@
         <header class="mb-6 text-center">
         </header>
 
-        <form id="notaForm" class="bg-white dark:bg-gray-800 shadow-md rounded p-6 space-y-4 ">
+        <form id="notaForm" class="bg-white dark:bg-gray-800 shadow-md rounded p-6 space-y-4">
+            <div class="flex justify-between items-center">
+                <img src="image/logo-blue.png" class="w-20 block dark:hidden">
+                <img src="image/logo-white.png" class="w-20 hidden dark:block">
+                <img src="image/letreiro.png" class="w-40 h-auto block dark:hidden">
+                <img src="image/letreiro-white.png" class="w-40 h-auto hidden dark:block">
+            </div>
             <div id="avaliacoes" class="space-y-4"></div>
             <div class="flex flex-wrap justify-between gap-2">
                 <button type="button" onclick="adicionarAvaliacao()"
@@ -43,7 +49,7 @@
                     <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Calcular
                         Média</button>
                     <button type="button" onclick="adicionarTabelas()"
-                        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full flex items-center">
+                        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -69,11 +75,16 @@
         </div>
         <div class="fixed bottom-4 left-4">
             <button onclick="toggleDarkMode()"
-                class="mt-2 px-4 py-1 text-sm bg-white dark:bg-gray-800 shadow-md dark:text-white rounded dark:hover:bg-gray-700"><svg
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
+                class="mt-2 px-4 py-1 text-sm bg-white dark:bg-gray-800 shadow-md dark:text-white rounded dark:hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6 block dark:hidden mx-auto">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6 hidden dark:block mx-auto">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
                 </svg>
             </button>
         </div>
@@ -85,15 +96,16 @@
         function adicionarAvaliacao() {
             const container = document.getElementById("avaliacoes");
             const div = document.createElement("div");
-            div.className = "avaliacao flex flex-col sm:flex-row gap-2";
+            div.className = "avaliacao";
             div.innerHTML = `
-                <div class="flex flex-col sm:flex-row gap-2 w-full">
-                    <input name="nome${contador}" placeholder="Nome do aluno" class="text-black flex-1 rounded-full px-4 py-2 border" required>
-                    <input name="tipo${contador}" placeholder="Tipo (Prova)" class="text-black flex-1 rounded-full px-4 py-2 border" required>
-                    <input name="nota${contador}" type="number" placeholder="Nota" step="0.1" class="text-black  w-32 rounded-full px-4 py-2 border" required>
-                    <input name="peso${contador}" type="number" placeholder="Peso (%)" class="text-black w-32 rounded-full px-4 py-2 border" required>
-                </div>
-            `;
+            <div class="flex flex-wrap justify-between gap-2">
+                <input name="nome${contador}" placeholder="Nome do aluno" class="text-black flex-1 rounded-full px-4 py-2 border" required>
+                <input name="tipo${contador}" placeholder="Tipo (Prova)" class="text-black flex-1 rounded-full px-4 py-2 border" required>
+                <input name="nota${contador}" type="number" placeholder="Nota" step="0.1" class="text-black w-32 rounded-full px-4 py-2 border" required>
+                <input name="peso${contador}" type="number" placeholder="Peso (%)" class="text-black w-32 rounded-full px-4 py-2 border" required>
+            </div>
+            <div class="border-b border-gray-300 my-4"></div>
+    `;
             container.appendChild(div);
             contador++;
         }
@@ -108,7 +120,7 @@
                 params.append(key, value);
             }
 
-            fetch("https://9eae-2804-108c-c800-ae71-b084-1ac-c8cc-5bc1.ngrok-free.app/unochapeco-calculator/calcular.php", {
+            fetch("https://ddbf-2804-108c-c894-3500-303d-50db-82a2-a814.ngrok-free.app/calculator/calcular.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -143,12 +155,18 @@
             const inputs = document.querySelectorAll("#avaliacoes input");
             const dados = [];
 
-            for (let i = 0; i < inputs.length; i += 3) {
-                dados.push({
-                    tipo: inputs[i].value,
-                    nota: inputs[i + 1].value,
-                    peso: inputs[i + 2].value,
-                });
+            for (let i = 0; i < inputs.length; i += 4) {
+                if (inputs[i] && inputs[i + 1] && inputs[i + 2] && inputs[i + 3]) {
+                    dados.push({
+                        nome: inputs[i].value,
+                        tipo: inputs[i + 1].value,
+                        nota: inputs[i + 2].value,
+                        peso: inputs[i + 3].value,
+                    });
+                } else {
+                    console.error("Faltam campos de entrada para um conjunto completo (nome do aluno, tipo, nota, peso).");
+                    break;
+                }
             }
 
             const url = `tabela.html?data=${encodeURIComponent(JSON.stringify(dados))}`;

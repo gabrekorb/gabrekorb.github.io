@@ -1,15 +1,19 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 function calcularMedia($data) {
     $avaliacoes = [];
     $quantidade = 0;
     $soma = 0.0;
     $totalPesos = 0.0;
 
-    // $data é a string do POST, ex: tipo0=Prova&nota0=8.5&peso0=40&tipo1=Trabalho&nota1=7.0&peso1=60
-    // Vamos quebrar pelos '&' e extrair os valores
     $pares = explode('&', $data);
 
-    // Para organizar, vamos guardar os dados em arrays temporários
     $tipos = [];
     $notas = [];
     $pesos = [];
@@ -31,7 +35,6 @@ function calcularMedia($data) {
 
     for ($i = 0; $i < $quantidade; $i++) {
         if (!isset($notas[$i]) || !isset($pesos[$i])) {
-            // Dados incompletos
             continue;
         }
         $peso = $pesos[$i] / 100.0;
@@ -46,7 +49,6 @@ function calcularMedia($data) {
     return $soma;
 }
 
-// Recebe os dados do POST
 $post_data = file_get_contents('php://input');
 
 $media = calcularMedia($post_data);
