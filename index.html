@@ -46,9 +46,9 @@
                     Adicionar Avaliação
                 </button>
                 <div class="flex gap-2">
-                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Calcular
+                    <button type="submit" id="button-calc" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Calcular
                         Média</button>
-                    <button type="button" onclick="adicionarTabelas()"
+                    <button type="button" id="button-table" onclick="adicionarTabelas()"
                         class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -99,10 +99,21 @@
             div.className = "avaliacao";
             div.innerHTML = `
             <div class="flex flex-wrap justify-between gap-2">
+                <input name="fase${contador}" placeholder="Avaliação" class="text-black flex-1 rounded-full px-4 py-2 border" required>
+                <div class="grid justify-center align-center">
+                    <div id="erroPesoFase${contador}" class="text-red-500 text-sm hidden">Peso deve ser entre 0% e 100%.</div>
+                    <input name="pesoFase${contador}" type="number" placeholder="Peso da Fase (%)" class="text-black flex-1 rounded-full px-4 py-2 border" required id="peso${contador}" oninput="validarPeso(this)">
+                </div>
                 <input name="nome${contador}" placeholder="Nome do aluno" class="text-black flex-1 rounded-full px-4 py-2 border" required>
                 <input name="tipo${contador}" placeholder="Tipo (Prova)" class="text-black flex-1 rounded-full px-4 py-2 border" required>
-                <input name="nota${contador}" type="number" placeholder="Nota" step="0.1" class="text-black w-32 rounded-full px-4 py-2 border" required>
-                <input name="peso${contador}" type="number" placeholder="Peso (%)" class="text-black w-32 rounded-full px-4 py-2 border" required>
+                <div class="grid justify-center align-center"> 
+                    <div id="erroNota${contador}" class="text-red-500 text-sm hidden">Nota deve ser entre 0 e 10.</div>
+                    <input name="nota${contador}" type="number" placeholder="Nota" step="0.1" class="text-black w-32 rounded-full px-4 py-2 border" required id="nota${contador}" oninput="validarNota(this)">
+                </div> 
+                <div class="grid justify-center align-center">
+                    <div id="erroPeso${contador}" class="text-red-500 text-sm hidden">Peso deve ser entre 0% e 100%.</div>
+                    <input name="peso${contador}" type="number" placeholder="Peso (%)" class="text-black w-32 rounded-full px-4 py-2 border" required id="peso${contador}" oninput="validarPeso(this)">
+                </div>
             </div>
             <div class="border-b border-gray-300 my-4"></div>
     `;
@@ -158,10 +169,12 @@
             for (let i = 0; i < inputs.length; i += 4) {
                 if (inputs[i] && inputs[i + 1] && inputs[i + 2] && inputs[i + 3]) {
                     dados.push({
-                        nome: inputs[i].value,
-                        tipo: inputs[i + 1].value,
-                        nota: inputs[i + 2].value,
-                        peso: inputs[i + 3].value,
+                        fase: inputs[i].value,
+                        pesoFase: inputs[i + 1].value,
+                        nome: inputs[i + 2].value,
+                        tipo: inputs[i + 3].value,
+                        nota: inputs[i + 4].value,
+                        peso: inputs[i + 5].value,
                     });
                 } else {
                     console.error("Faltam campos de entrada para um conjunto completo (nome do aluno, tipo, nota, peso).");
@@ -172,6 +185,105 @@
             const url = `tabela.html?data=${encodeURIComponent(JSON.stringify(dados))}`;
             window.open(url, '_blank');
         }
+        function validarNotas() {
+            const fases = document.querySelectorAll('input[name^="fase"]');
+
+            if (fase == 1){
+
+            }
+        }
+        function validarNotas() {
+            let todasNotasValidas = true;
+
+            const notas = document.querySelectorAll('input[name^="nota"]');
+            notas.forEach(notaInput => {
+                const valorNota = parseFloat(notaInput.value);
+                if (valorNota < 0 || valorNota > 10 || isNaN(valorNota)) {
+                    todasNotasValidas = false;
+                }
+            });
+
+            const buttonTable = document.getElementById('button-table');
+            if (todasNotasValidas) {
+                buttonTable.disabled = false;
+                buttonTable.classList.remove('opacity-50', 'cursor-not-allowed'); 
+            } else {
+                buttonTable.disabled = true;
+                buttonTable.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+
+            const buttonCalc = document.getElementById('button-calc');
+            if (todasNotasValidas) {
+                buttonCalc.disabled = false;
+                buttonCalc.classList.remove('opacity-50', 'cursor-not-allowed'); 
+            } else {
+                buttonCalc.disabled = true;
+                buttonCalc.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function validarNota(input) {
+            const valor = parseFloat(input.value);
+            const erroDiv = document.getElementById('erroNota' + input.name.replace('nota', ''));
+
+            if (valor < 0 || valor > 10 || isNaN(valor)) {
+                erroDiv.classList.remove('hidden');
+                input.setCustomValidity('Nota deve ser entre 0 e 10.');
+            } else {
+                erroDiv.classList.add('hidden');
+                input.setCustomValidity('');
+            }
+
+            validarNotas();
+        }
+        
+        function validarPesos() {
+            let todosPesosValidos = true;
+
+            const pesos = document.querySelectorAll('input[name^="peso"]');
+            pesos.forEach(pesoInput => {
+                const valorPeso = parseFloat(pesoInput.value);
+                if (valorPeso < 0 || valorPeso > 100 || isNaN(valorPeso)) {
+                    todosPesosValidos = false;
+                }
+            });
+
+            const buttonTable = document.getElementById('button-table');
+            if (todasNotasValidas) {
+                buttonTable.disabled = false;
+                buttonTable.classList.remove('opacity-50', 'cursor-not-allowed'); 
+            } else {
+                buttonTable.disabled = true;
+                buttonTable.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+
+            const buttonCalc = document.getElementById('button-calc');
+            if (todosPesosValidos) {
+                buttonCalc.disabled = false;
+                buttonCalc.classList.remove('opacity-50', 'cursor-not-allowed'); 
+            } else {
+                buttonCalc.disabled = true;
+                buttonCalc.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+
+        function validarPeso(input){
+            const peso = parseInt(input.value);
+            const erroPeso = document.getElementById('erroPeso' + input.name.replace('peso', ''));
+
+            if (peso < 0 || peso > 100 || isNaN(peso)){
+                erroPeso.classList.remove('hidden');
+                input.setCustomValidity('O peso deve ser entre 0% e 100%')
+            } else {
+                erroPeso.classList.add('hidden');
+                input.setCustomValidity('')
+            }
+        }
+
+        document.getElementById('notaForm').addEventListener('input', function () {
+            validarNotas();
+        });
 
 
 
