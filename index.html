@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Notas</title>
+    <title>Calculadora de Notas por Fase</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -23,21 +23,36 @@
 
 <body
     class="bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen p-4 transition-colors duration-300">
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-4xl mx-auto">
         <header class="mb-6 text-center">
         </header>
 
         <form id="notaForm" class="bg-white dark:bg-gray-800 shadow-md rounded p-6 space-y-4">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center mb-4">
                 <img src="image/logo-blue.png" class="w-20 block dark:hidden">
                 <img src="image/logo-white.png" class="w-20 hidden dark:block">
                 <img src="image/letreiro.png" class="w-40 h-auto block dark:hidden">
                 <img src="image/letreiro-white.png" class="w-40 h-auto hidden dark:block">
             </div>
+
+            <div class="mb-6 border-b pb-4 dark:border-gray-600">
+                <label for="faseCalculo" class="block text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">1.
+                    Selecione a Fase para Calcular a Média:</label>
+                <select id="faseCalculo" name="faseCalculo"
+                    class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md text-black">
+                    <option value="1">Fase 1</option>
+                    <option value="2">Fase 2</option>
+                    <option value="3">Fase 3</option>
+                </select>
+            </div>
+
+            <h2 class="text-lg font-bold">2. Adicione as Avaliações</h2>
             <div id="avaliacoes" class="space-y-4"></div>
-            <div class="flex flex-wrap justify-between gap-2">
+
+            <div class="flex flex-wrap justify-between gap-2 pt-4">
                 <button type="button" onclick="adicionarAvaliacao()"
-                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2">
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full flex items-center gap-2"
+                    title="Adicionar mais uma linha de avaliação">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -46,36 +61,44 @@
                     Adicionar Avaliação
                 </button>
                 <div class="flex gap-2">
-                    <button type="submit" id="button-calc" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Calcular
-                        Média</button>
-                    <button type="button" id="button-table" onclick="adicionarTabelas()"
-                        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded flex items-center">
+                    <button type="submit" id="button-calc"
+                        class="bg-green-500 hover:bg-green-600 hover:bg-green-600 text-white px-4 py-2 rounded-full flex items-center"
+                        title="Calcular fase por fase">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
+                            stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
-                        </svg>
+                                d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
+                        </svg>Calcular Média da Fase
+                    </button>
+                    <button type="button" id="button-table" onclick="adicionarTabelas()"
+                        class="bg-green-500 hover:bg-green-600 hover:bg-green-600 text-white px-4 py-2 rounded-full flex items-center"
+                        title="Gerar boletim de todas as notas">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>Boletim
                     </button>
                 </div>
             </div>
         </form>
 
-        <div id="resultado"
-            class="mt-6 p-4 rounded bg-green-100 dark:bg-green-800 text-green-900 dark:text-green-200 hidden"></div>
+        <div id="resultado" class="mt-6 p-4 rounded hidden"></div>
 
         <div class="fixed bottom-4 right-4">
             <button onclick="resetMethod()"
-                class="mt-2 px-4 py-1 text-sm bg-white dark:bg-gray-800 shadow-md dark:text-white rounded dark:hover:bg-gray-700"><svg
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                class="mt-2 px-4 py-2 text-sm bg-white dark:bg-gray-800 shadow-md dark:text-white rounded dark:hover:bg-gray-700"
+                title="Limpar Tudo">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
+                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                 </svg>
             </button>
         </div>
         <div class="fixed bottom-4 left-4">
             <button onclick="toggleDarkMode()"
-                class="mt-2 px-4 py-1 text-sm bg-white dark:bg-gray-800 shadow-md dark:text-white rounded dark:hover:bg-gray-700">
+                class="mt-2 px-4 py-2 text-sm bg-white dark:bg-gray-800 shadow-md dark:text-white rounded dark:hover:bg-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6 block dark:hidden mx-auto">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -97,26 +120,42 @@
             const container = document.getElementById("avaliacoes");
             const div = document.createElement("div");
             div.className = "avaliacao";
+
             div.innerHTML = `
-            <div class="flex flex-wrap justify-between gap-2">
-                <input name="fase${contador}" placeholder="Avaliação" class="text-black flex-1 rounded-full px-4 py-2 border" required>
-                <div class="grid justify-center align-center">
-                    <div id="erroPesoFase${contador}" class="text-red-500 text-sm hidden">Peso deve ser entre 0% e 100%.</div>
-                    <input name="pesoFase${contador}" type="number" placeholder="Peso da Fase (%)" class="text-black flex-1 rounded-full px-4 py-2 border" required id="peso${contador}" oninput="validarPeso(this)">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-start p-3 border rounded-lg dark:border-gray-700">
+                    <div class="grid">
+                        <label class="text-[12px]">Avaliação (Exemplo: TPE1)</label> 
+                        <input name="avaliacaoNome${contador}" class="text-black w-full rounded-full px-4 py-2 border" required>
+                    </div>
+                    
+                    <div class="grid">
+                        <label class="text-[12px]">Nome (Exemplo: João...)</label> 
+                        <input name="nome${contador}" class="text-black w-full rounded-full px-4 py-2 border" required>
+                    </div>
+
+                    <div class="grid">
+                        <label class="text-[12px]">Fase</label>
+                        <select name="fase${contador}" class="text-black w-full rounded-full px-4 py-2 border" required>
+                            <option value="" disabled selected>Selecione a Fase</option>
+                            <option value="1">Fase 1</option>
+                            <option value="2">Fase 2</option>
+                            <option value="3">Fase 3</option>
+                        </select>
+                    </div>
+
+                    <div class="w-full grid">
+                        <label class="text-[12px]">Nota de 0 a 10</label>
+                        <input name="nota${contador}" type="number" step="0.1" class="text-black w-full rounded-full px-4 py-2 border" required id="nota${contador}" oninput="validarInput(this, 'erroNota', 0, 10, 'Nota deve ser entre 0 e 10.')">
+                        <div id="erroNota${contador}" class="text-red-500 text-sm hidden px-4 mt-1"></div>
+                    </div>
+
+                    <div class="w-full grid">
+                        <label class="text-[12px]">Peso de 0% a 100%</label>
+                        <input name="peso${contador}" type="number" class="text-black w-full rounded-full px-4 py-2 border" required id="peso${contador}" oninput="validarInput(this, 'erroPeso', 0, 100, 'Peso deve ser entre 0 e 100.')">
+                        <div id="erroPeso${contador}" class="text-red-500 text-sm hidden px-4 mt-1"></div>
+                    </div>
                 </div>
-                <input name="nome${contador}" placeholder="Nome do aluno" class="text-black flex-1 rounded-full px-4 py-2 border" required>
-                <input name="tipo${contador}" placeholder="Tipo (Prova)" class="text-black flex-1 rounded-full px-4 py-2 border" required>
-                <div class="grid justify-center align-center"> 
-                    <div id="erroNota${contador}" class="text-red-500 text-sm hidden">Nota deve ser entre 0 e 10.</div>
-                    <input name="nota${contador}" type="number" placeholder="Nota" step="0.1" class="text-black w-32 rounded-full px-4 py-2 border" required id="nota${contador}" oninput="validarNota(this)">
-                </div> 
-                <div class="grid justify-center align-center">
-                    <div id="erroPeso${contador}" class="text-red-500 text-sm hidden">Peso deve ser entre 0% e 100%.</div>
-                    <input name="peso${contador}" type="number" placeholder="Peso (%)" class="text-black w-32 rounded-full px-4 py-2 border" required id="peso${contador}" oninput="validarPeso(this)">
-                </div>
-            </div>
-            <div class="border-b border-gray-300 my-4"></div>
-    `;
+            `;
             container.appendChild(div);
             contador++;
         }
@@ -124,32 +163,108 @@
         document.getElementById("notaForm").addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const formData = new FormData(this);
-            const params = new URLSearchParams();
+            const faseParaCalcular = document.getElementById("faseCalculo").value;
+            const container = document.getElementById('avaliacoes');
+            const divsAvaliacao = container.querySelectorAll('.avaliacao');
 
-            for (let [key, value] of formData.entries()) {
-                params.append(key, value);
+            let totalNotaPonderada = 0;
+            let totalPesos = 0;
+            let nomeAluno = '';
+            let hasMatchingAssessment = false;
+
+            divsAvaliacao.forEach((div, index) => {
+                const faseInput = div.querySelector(`select[name^="fase"]`);
+
+                if (faseInput && faseInput.value === faseParaCalcular) {
+                    hasMatchingAssessment = true;
+
+                    const nomeInput = div.querySelector(`input[name^="nome"]`);
+                    const notaInput = div.querySelector(`input[name^="nota"]`);
+                    const pesoInput = div.querySelector(`input[name^="peso"]`);
+
+                    if (nomeInput) nomeAluno = nomeInput.value || nomeAluno;
+
+                    const nota = parseFloat(notaInput.value);
+                    const peso = parseFloat(pesoInput.value);
+
+                    if (!isNaN(nota) && !isNaN(peso) && peso > 0) {
+                        totalNotaPonderada += nota * peso;
+                        totalPesos += peso;
+                    }
+                }
+            });
+
+            const resultadoDiv = document.getElementById("resultado");
+            if (hasMatchingAssessment && totalPesos > 0) {
+                const mediaFinal = totalNotaPonderada / totalPesos;
+
+                let aviso = '';
+                if (Math.round(totalPesos) !== 100) {
+                    aviso = `<p class="text-sm text-yellow-800 dark:text-yellow-300 mt-2">Aviso: A soma dos pesos para a Fase ${faseParaCalcular} é ${totalPesos.toFixed(0)}%, que é diferente de 100%.</p>`;
+                }
+
+                resultadoDiv.innerHTML = `
+                    <h3 class="font-bold text-lg">Resultado da Fase ${faseParaCalcular}</h3>
+                    <p><strong>Aluno(a):</strong> ${nomeAluno || 'Não informado'}</p>
+                    <p><strong>Média Ponderada da Fase:</strong> <span class="font-bold text-xl">${mediaFinal.toFixed(2)}</span></p>
+                    ${aviso}
+                `;
+                resultadoDiv.className = "mt-6 p-4 rounded bg-green-100 dark:bg-green-800 text-green-900 dark:text-green-200";
+            } else {
+                resultadoDiv.innerHTML = `Nenhuma avaliação válida foi encontrada para a <strong>Fase ${faseParaCalcular}</strong>. Verifique se as avaliações foram adicionadas e se a fase correta foi selecionada para cada uma.`;
+                resultadoDiv.className = "mt-6 p-4 rounded bg-yellow-100 dark:bg-yellow-800 text-yellow-900 dark:text-yellow-200";
             }
-
-            fetch("https://9a8c-2804-108c-c894-3500-39ef-b444-49c3-86dd.ngrok-free.app/calculator/calcular.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: params.toString(),
-            })
-                .then((res) => res.text())
-                .then((html) => {
-                    const resultado = document.getElementById("resultado");
-                    resultado.innerHTML = html;
-                    resultado.classList.remove("hidden");
-                })
-                .catch(() => {
-                    const resultado = document.getElementById("resultado");
-                    resultado.innerText = "Erro ao calcular.";
-                    resultado.classList.remove("hidden");
-                });
+            resultadoDiv.classList.remove("hidden");
         });
+
+        function validarInput(input, erroDivIdBase, min, max, mensagemErro) {
+            const valor = parseFloat(input.value);
+            const erroDiv = document.getElementById(erroDivIdBase + input.name.match(/\d+/)[0]);
+
+            if (valor < min || valor > max || isNaN(valor)) {
+                erroDiv.textContent = mensagemErro;
+                erroDiv.classList.remove('hidden');
+                input.setCustomValidity(mensagemErro);
+                document.getElementById('button-calc').disabled = true;
+                document.getElementById('button-calc').classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                erroDiv.classList.add('hidden');
+                input.setCustomValidity('');
+                document.getElementById('button-calc').disabled = false;
+                document.getElementById('button-calc').classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function adicionarTabelas() {
+            const dados = [];
+            const container = document.getElementById('avaliacoes');
+            const divsAvaliacao = container.querySelectorAll('.avaliacao');
+
+            divsAvaliacao.forEach(div => {
+                const nomeAvaliacao = div.querySelector(`input[name^="avaliacaoNome"]`).value;
+                const nomeAluno = div.querySelector(`input[name^="nome"]`).value;
+                const fase = div.querySelector(`select[name^="fase"]`).value;
+                const nota = div.querySelector(`input[name^="nota"]`).value;
+                const peso = div.querySelector(`input[name^="peso"]`).value;
+
+                if (fase && nomeAvaliacao && nomeAluno && nota && peso) {
+                    dados.push({
+                        fase: fase,
+                        nomeAvaliacao: nomeAvaliacao,
+                        nomeAluno: nomeAluno,
+                        nota: nota,
+                        peso: peso
+                    });
+                }
+            });
+
+            if (dados.length > 0) {
+                const url = `tabela.html?data=${encodeURIComponent(JSON.stringify(dados))}`;
+                window.open(url, '_blank');
+            } else {
+                alert("Por favor, preencha pelo menos uma avaliação completa antes de gerar a tabela.");
+            }
+        }
 
         function toggleDarkMode() {
             document.documentElement.classList.toggle('dark');
@@ -162,130 +277,6 @@
             contador = 0;
             adicionarAvaliacao();
         }
-        function adicionarTabelas() {
-            const inputs = document.querySelectorAll("#avaliacoes input");
-            const dados = [];
-
-            for (let i = 0; i < inputs.length; i += 4) {
-                if (inputs[i] && inputs[i + 1] && inputs[i + 2] && inputs[i + 3]) {
-                    dados.push({
-                        fase: inputs[i].value,
-                        pesoFase: inputs[i + 1].value,
-                        nome: inputs[i + 2].value,
-                        tipo: inputs[i + 3].value,
-                        nota: inputs[i + 4].value,
-                        peso: inputs[i + 5].value,
-                    });
-                } else {
-                    console.error("Faltam campos de entrada para um conjunto completo (nome do aluno, tipo, nota, peso).");
-                    break;
-                }
-            }
-
-            const url = `tabela.html?data=${encodeURIComponent(JSON.stringify(dados))}`;
-            window.open(url, '_blank');
-        }
-        function validarNotas() {
-            const fases = document.querySelectorAll('input[name^="fase"]');
-
-            if (fase == 1){
-
-            }
-        }
-        function validarNotas() {
-            let todasNotasValidas = true;
-
-            const notas = document.querySelectorAll('input[name^="nota"]');
-            notas.forEach(notaInput => {
-                const valorNota = parseFloat(notaInput.value);
-                if (valorNota < 0 || valorNota > 10 || isNaN(valorNota)) {
-                    todasNotasValidas = false;
-                }
-            });
-
-            const buttonTable = document.getElementById('button-table');
-            if (todasNotasValidas) {
-                buttonTable.disabled = false;
-                buttonTable.classList.remove('opacity-50', 'cursor-not-allowed'); 
-            } else {
-                buttonTable.disabled = true;
-                buttonTable.classList.add('opacity-50', 'cursor-not-allowed');
-            }
-
-            const buttonCalc = document.getElementById('button-calc');
-            if (todasNotasValidas) {
-                buttonCalc.disabled = false;
-                buttonCalc.classList.remove('opacity-50', 'cursor-not-allowed'); 
-            } else {
-                buttonCalc.disabled = true;
-                buttonCalc.classList.add('opacity-50', 'cursor-not-allowed');
-            }
-        }
-
-        function validarNota(input) {
-            const valor = parseFloat(input.value);
-            const erroDiv = document.getElementById('erroNota' + input.name.replace('nota', ''));
-
-            if (valor < 0 || valor > 10 || isNaN(valor)) {
-                erroDiv.classList.remove('hidden');
-                input.setCustomValidity('Nota deve ser entre 0 e 10.');
-            } else {
-                erroDiv.classList.add('hidden');
-                input.setCustomValidity('');
-            }
-
-            validarNotas();
-        }
-        
-        function validarPesos() {
-            let todosPesosValidos = true;
-
-            const pesos = document.querySelectorAll('input[name^="peso"]');
-            pesos.forEach(pesoInput => {
-                const valorPeso = parseFloat(pesoInput.value);
-                if (valorPeso < 0 || valorPeso > 100 || isNaN(valorPeso)) {
-                    todosPesosValidos = false;
-                }
-            });
-
-            const buttonTable = document.getElementById('button-table');
-            if (todasNotasValidas) {
-                buttonTable.disabled = false;
-                buttonTable.classList.remove('opacity-50', 'cursor-not-allowed'); 
-            } else {
-                buttonTable.disabled = true;
-                buttonTable.classList.add('opacity-50', 'cursor-not-allowed');
-            }
-
-            const buttonCalc = document.getElementById('button-calc');
-            if (todosPesosValidos) {
-                buttonCalc.disabled = false;
-                buttonCalc.classList.remove('opacity-50', 'cursor-not-allowed'); 
-            } else {
-                buttonCalc.disabled = true;
-                buttonCalc.classList.add('opacity-50', 'cursor-not-allowed');
-            }
-        }
-
-
-        function validarPeso(input){
-            const peso = parseInt(input.value);
-            const erroPeso = document.getElementById('erroPeso' + input.name.replace('peso', ''));
-
-            if (peso < 0 || peso > 100 || isNaN(peso)){
-                erroPeso.classList.remove('hidden');
-                input.setCustomValidity('O peso deve ser entre 0% e 100%')
-            } else {
-                erroPeso.classList.add('hidden');
-                input.setCustomValidity('')
-            }
-        }
-
-        document.getElementById('notaForm').addEventListener('input', function () {
-            validarNotas();
-        });
-
-
 
         adicionarAvaliacao();
     </script>
