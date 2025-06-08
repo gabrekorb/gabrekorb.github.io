@@ -37,12 +37,13 @@
 
             <div class="mb-6 border-b pb-4 dark:border-gray-600">
                 <label for="faseCalculo" class="block text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">1.
-                    Selecione a Fase para Calcular a Média:</label>
-                <select id="faseCalculo" name="faseCalculo"
+                    Selecione o Grau para Calcular a Média:</label>
+                <select id="faseCalculo" name="faseCalculo" title="Atenção: Irá calcular os graus separadamento dependendo da sua seleção"
                     class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md text-black">
-                    <option value="1">Fase 1</option>
-                    <option value="2">Fase 2</option>
-                    <option value="3">Fase 3</option>
+                    <option value="" disabled selected>Selecione o grau></option>
+                    <option value="1">Grau 1</option>
+                    <option value="2">Grau 2</option>
+                    <option value="3">Grau 3</option>
                 </select>
             </div>
 
@@ -63,12 +64,12 @@
                 <div class="flex gap-2">
                     <button type="submit" id="button-calc"
                         class="bg-green-500 hover:bg-green-600 hover:bg-green-600 text-white px-4 py-2 rounded-full flex items-center"
-                        title="Calcular fase por fase">
+                        title="Calcular grau por grau">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
-                        </svg>Calcular Média da Fase
+                        </svg>Calcular média do grau
                     </button>
                     <button type="button" id="button-table" onclick="adicionarTabelas()"
                         class="bg-green-500 hover:bg-green-600 hover:bg-green-600 text-white px-4 py-2 rounded-full flex items-center"
@@ -137,7 +138,7 @@
                 <div class="grid justify-items-center">
                     <label class="text-[10px]">Selecione a grau:</label>
                     <select name="fase${contador}" class="text-black w-full rounded-full px-4 py-2 border" required>
-                        <option value="" disabled selected>Selecione a Fase</option>
+                        <option value="" disabled selected>Selecione o Grau</option>
                         <option value="1">Grau 1</option>
                         <option value="2">Grau 2</option>
                         <option value="3">Grau 3</option>
@@ -152,7 +153,7 @@
 
                 <div class="w-full grid justify-items-center">
                     <label class="text-[10px]">Digite o peso da avaliação:</label>
-                    <input name="peso${contador}" placeholder="Obs: de 0% a 100%" type="number" class="placeholder:text-[10px] placeholder:align-center text-black w-full rounded-full px-4 py-2 border" required id="peso${contador}" oninput="validarInput(this, 'erroPeso', 0, 100, 'Peso deve ser entre 0 e 100.')">
+                    <input name="peso${contador}" placeholder="Obs: de 0% a 100%" type="number" class="placeholder:text-[9.8px] placeholder:align-center placeholder:justify-center text-black w-full rounded-full px-4 py-2 border" required id="peso${contador}" oninput="validarInput(this, 'erroPeso', 0, 100, 'Peso deve ser entre 0 e 100.')">
                     <div id="erroPeso${contador}" class="text-red-500 text-sm hidden px-4 mt-1"></div>
                 </div>     
 
@@ -211,18 +212,18 @@
 
                 let aviso = '';
                 if (Math.round(totalPesos) !== 100) {
-                    aviso = `<p class="text-sm text-yellow-800 dark:text-yellow-300 mt-2">Aviso: A soma dos pesos para a Fase ${faseParaCalcular} é ${totalPesos.toFixed(0)}%, que é diferente de 100%.</p>`;
+                    aviso = `<p class="text-sm text-yellow-800 dark:text-yellow-300 mt-2">Aviso: A soma dos pesos para o Grau ${faseParaCalcular} é ${totalPesos.toFixed(0)}%, que é diferente de 100%.</p>`;
                 }
 
                 resultadoDiv.innerHTML = `
-                    <h3 class="font-bold text-lg">Resultado da Fase ${faseParaCalcular}</h3>
+                    <h3 class="font-bold text-lg">Resultado do Grau ${faseParaCalcular}</h3>
                     <p><strong>Aluno(a):</strong> ${nomeAluno || 'Não informado'}</p>
-                    <p><strong>Média Ponderada da Fase:</strong> <span class="font-bold text-xl">${mediaFinal.toFixed(2)}</span></p>
+                    <p><strong>Média Ponderada do GRau:</strong> <span class="font-bold text-xl">${mediaFinal.toFixed(2)}</span></p>
                     ${aviso}
                 `;
                 resultadoDiv.className = "mt-6 p-4 rounded bg-green-100 dark:bg-green-800 text-green-900 dark:text-green-200";
             } else {
-                resultadoDiv.innerHTML = `Nenhuma avaliação válida foi encontrada para a <strong>Fase ${faseParaCalcular}</strong>. Verifique se as avaliações foram adicionadas e se a fase correta foi selecionada para cada uma.`;
+                resultadoDiv.innerHTML = `Nenhuma avaliação válida foi encontrada para a <strong>Grau ${faseParaCalcular}</strong>. Verifique se as avaliações foram adicionadas e se a fase correta foi selecionada para cada uma.`;
                 resultadoDiv.className = "mt-6 p-4 rounded bg-yellow-100 dark:bg-yellow-800 text-yellow-900 dark:text-yellow-200";
             }
             resultadoDiv.classList.remove("hidden");
