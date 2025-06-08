@@ -37,7 +37,7 @@
 
             <div class="mb-6 border-b pb-4 dark:border-gray-600">
                 <label for="faseCalculo" class="block text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">1.
-                    Selecione o Grau para Calcular a Média:</label>
+                    Selecione o grau para Calcular a Média:</label>
                 <select id="faseCalculo" name="faseCalculo" title="Atenção: Irá calcular os graus separadamento dependendo da sua seleção"
                     class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md text-black">
                     <option value="" disabled selected>Selecione o grau</option>
@@ -137,8 +137,8 @@
 
                 <div class="grid justify-items-center">
                     <label class="text-[10px]">Selecione a grau:</label>
-                    <select name="fase${contador}" class="text-[10px] text-black w-full rounded-full px-4 py-2 border" required>
-                        <option value="" disabled selected>Selecione o Grau</option>
+                    <select name="fase${contador}" class="text-[9.5px] text-black w-full rounded-full px-4 py-2 border" required>
+                        <option value="" disabled selected>Selecione o grau</option>
                         <option value="1">Grau 1</option>
                         <option value="2">Grau 2</option>
                         <option value="3">Grau 3</option>
@@ -153,7 +153,7 @@
 
                 <div class="w-full grid justify-items-center">
                     <label class="text-[10px]">Digite o peso da avaliação:</label>
-                    <input name="peso${contador}" placeholder="Obs: de 0% a 100%" type="number" class="placeholder:text-[9.6px] text-[10px] text-black w-full rounded-full px-4 py-2 border" required id="peso${contador}" oninput="validarInput(this, 'erroPeso', 0, 100, 'Peso deve ser entre 0 e 100.')">
+                    <input name="peso${contador}" placeholder="Obs: de 0% a 100%" type="number" class="placeholder:text-[9.5px] text-[10px] text-black w-full rounded-full px-4 py-2 border" required id="peso${contador}" oninput="validarInput(this, 'erroPeso', 0, 100, 'Peso deve ser entre 0 e 100.')">
                     <div id="erroPeso${contador}" class="text-red-500 text-sm hidden px-4 mt-1"></div>
                 </div>     
 
@@ -212,18 +212,18 @@
 
                 let aviso = '';
                 if (Math.round(totalPesos) !== 100) {
-                    aviso = `<p class="text-sm text-yellow-800 dark:text-yellow-300 mt-2">Aviso: A soma dos pesos para o Grau ${faseParaCalcular} é ${totalPesos.toFixed(0)}%, que é diferente de 100%.</p>`;
+                    aviso = `<p class="text-sm text-yellow-800 dark:text-yellow-300 mt-2">Aviso: A soma dos pesos para o grau ${faseParaCalcular} é ${totalPesos.toFixed(0)}%, que é diferente de 100%.</p>`;
                 }
 
                 resultadoDiv.innerHTML = `
-                    <h3 class="font-bold text-lg">Resultado do Grau ${faseParaCalcular}</h3>
+                    <h3 class="font-bold text-lg">Resultado do grau ${faseParaCalcular}</h3>
                     <p><strong>Aluno(a):</strong> ${nomeAluno || 'Não informado'}</p>
-                    <p><strong>Média Ponderada do GRau:</strong> <span class="font-bold text-xl">${mediaFinal.toFixed(2)}</span></p>
+                    <p><strong>Média Ponderada do grau:</strong> <span class="font-bold text-xl">${mediaFinal.toFixed(2)}</span></p>
                     ${aviso}
                 `;
                 resultadoDiv.className = "mt-6 p-4 rounded bg-green-100 dark:bg-green-800 text-green-900 dark:text-green-200";
             } else {
-                resultadoDiv.innerHTML = `Nenhuma avaliação válida foi encontrada para a <strong>Grau ${faseParaCalcular}</strong>. Verifique se as avaliações foram adicionadas e se a fase correta foi selecionada para cada uma.`;
+                resultadoDiv.innerHTML = `Nenhuma avaliação válida foi encontrada para o <strong>grau ${faseParaCalcular}</strong>. Verifique se as avaliações foram adicionadas e se o grau correta foi selecionada para cada uma.`;
                 resultadoDiv.className = "mt-6 p-4 rounded bg-yellow-100 dark:bg-yellow-800 text-yellow-900 dark:text-yellow-200";
             }
             resultadoDiv.classList.remove("hidden");
