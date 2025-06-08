@@ -68,7 +68,7 @@
             let tabelasHTML = '';
             let controlesHTML = `
                 <h2 class="text-2xl font-bold mb-4 text-center">Média Final do Semestre</h2>
-                <p class="text-center mb-6">Informe o peso de cada fase para calcular a média final do semestre.</p>
+                <p class="text-center mb-6">Informe o peso de cada grau para calcular a média final do semestre.</p>
                 <div id="inputsPesosFase" class="flex flex-col md:flex-row justify-center items-center gap-6 mb-6">
             `;
 
@@ -79,7 +79,7 @@
 
                 tabelasHTML += `
                     <div class="mb-8">
-                        <h2 class="text-2xl font-bold mb-4 text-blue-600 dark:text-blue-400">Resumo da Fase ${fase}</h2>
+                        <h2 class="text-2xl font-bold mb-4 text-blue-600 dark:text-blue-400">Resumo do grau ${fase}</h2>
                         <div class="overflow-x-auto">
                             <table class="w-full table-auto border-collapse dark:border-gray-600">
                                 <thead class="bg-gray-200 dark:bg-gray-700">
@@ -87,7 +87,7 @@
                                         <th class="border dark:border-gray-600 px-4 py-2 text-left">Aluno</th>
                                         <th class="border dark:border-gray-600 px-4 py-2 text-left">Avaliação</th>
                                         <th class="border dark:border-gray-600 px-4 py-2">Nota</th>
-                                        <th class="border dark:border-gray-600 px-4 py-2">Peso na Fase (%)</th>
+                                        <th class="border dark:border-gray-600 px-4 py-2">Peso do Grau (%)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -116,7 +116,7 @@
                             </table>
                         </div>
                         <div class="mt-4 text-right text-lg font-bold bg-gray-100 dark:bg-gray-700 p-3 rounded">
-                            Média da Fase ${fase}: <span class="text-green-600 dark:text-green-400">${mediaFase.toFixed(2)}</span>
+                            Média do grau ${fase}: <span class="text-green-600 dark:text-green-400">${mediaFase.toFixed(2)}</span>
                         </div>
                     </div>
                     <hr class="dark:border-gray-700 my-8">
@@ -124,7 +124,7 @@
 
                 controlesHTML += `
                     <div class="flex items-center gap-2">
-                        <label for="pesoFase${fase}" class="font-semibold">Peso Fase ${fase} (%):</label>
+                        <label for="pesoFase${fase}" class="font-semibold">Peso Grau ${fase} (%):</label>
                         <input type="number" id="pesoFase${fase}" class="text-black w-24 rounded-md px-2 py-1 border border-gray-300" placeholder="Ex: 30">
                     </div>
                 `;
@@ -151,7 +151,7 @@
                 const pesoFase = parseFloat(inputPeso.value);
 
                 if (isNaN(pesoFase) || pesoFase < 0) {
-                    alert(`Por favor, insira um peso válido (número positivo) para a Fase ${fase}.`);
+                    alert(`Por favor, insira um peso válido (número positivo) para o grau ${fase}.`);
                     hasInvalidInput = true;
                     break;
                 }
@@ -163,17 +163,17 @@
             if (hasInvalidInput) return;
 
             if (totalPesosSemestre === 0) {
-                document.getElementById('mediaFinal').innerHTML = `<p class="text-red-500">A soma dos pesos das fases não pode ser zero.</p>`;
+                document.getElementById('mediaFinal').innerHTML = `<p class="text-red-500">A soma dos pesos dos graus não pode ser zero.</p>`;
                 return;
             }
             
             if (Math.round(totalPesosSemestre) !== 100) {
-                alert(`Atenção: A soma dos pesos que você informou para as fases é ${totalPesosSemestre}%, que é diferente de 100%. O resultado será calculado, mas pode não ser o esperado.`);
+                alert(`Atenção: A soma dos pesos que você informou para os graus é ${totalPesosSemestre}%, que é diferente de 100%. O resultado será calculado, mas pode não ser o esperado.`);
             }
 
             const mediaFinal = totalNotaPonderadaSemestre / totalPesosSemestre;
-            const status = mediaFinal >= 7.0 ? 'Aprovado' : 'Reprovado';
-            const corStatus = mediaFinal >= 7.0 ? 'text-green-500' : 'text-red-500';
+            const status = mediaFinal >= 6.0 ? 'Aprovado' : 'Reprovado';
+            const corStatus = mediaFinal >= 6.0 ? 'text-green-500' : 'text-red-500';
 
 
             document.getElementById('mediaFinal').innerHTML = `
